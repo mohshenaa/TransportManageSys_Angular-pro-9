@@ -1,0 +1,16 @@
+# Ignore Visual Studio files
+.vs/
+*.suo
+*.user
+
+# Ignore Node / Angular stuff
+node_modules/
+.angular/cache/
+
+# Ignore build output
+dist/
+out/
+
+# Ignore log files
+npm-debug.log*
+yarn-debug.log*

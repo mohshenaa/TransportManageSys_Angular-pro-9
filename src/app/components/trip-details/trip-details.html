@@ -1,0 +1,74 @@
+<div class="container">
+  <h2 class="text-center">Trip Details</h2>
+
+  <!-- <div *ngIf="trip()">
+    <div class="card mb-4">
+      <div class="card-body">
+        <p><strong>Trip ID:</strong> {{ trip().tripId }}</p>
+        <p><strong>Start Location:</strong> {{ trip().startLocation }}</p>
+        <p><strong>Destination:</strong> {{ trip().destination }}</p>
+        <p><strong>Status:</strong> {{ trip().status }}</p>
+        <p><strong>Distance:</strong> {{ trip().distanceKm }} km</p>
+      </div>
+    </div> -->
+
+  <h4>Passengers ({{ trip().passengers?.length || 0 }})</h4>
+
+  <div *ngIf="!trip().passengers || trip().passengers.length === 0" class="alert alert-info">
+    No passengers found for this trip.
+  </div>
+
+  <div class="row" *ngIf="trip().passengers && trip().passengers.length > 0">
+    <div *ngFor="let passenger of trip().passengers; let i = index" class="col-md-4 mb-3">
+      <div class="card passenger-card">
+        <div class="card-body">
+          <div *ngIf="trip()">
+            <div class="card mb-4">
+              <div class="card-body">
+                <p><strong>Trip ID:</strong> {{ trip().tripId }}</p>
+                <p><strong>Start Location:</strong> {{ trip().startLocation }}</p>
+                <p><strong>Destination:</strong> {{ trip().destination }}</p>
+                <p><strong>Status:</strong> {{ trip().status }}</p>
+                <p><strong>Distance:</strong> {{ trip().distanceKm }} km</p>
+              </div>
+            </div>
+            <div class="text-center mb-3">
+              <div *ngIf="hasPassengerImage(passenger); else noImage">
+                <img
+                  [src]="getPassengerImage(passenger)"
+                  class="img-fluid rounded"
+                  style="max-height: 150px; object-fit: cover"
+                  [alt]="passenger.psngrName"
+                  (error)="onImageError($event)"
+                />
+              </div>
+              <ng-template #noImage>
+                <div
+                  class="no-image-placeholder bg-light rounded d-flex align-items-center justify-content-center"
+                  style="height: 150px"
+                >
+                  <span class="text-muted">No Image</span>
+                </div>
+              </ng-template>
+            </div>
+
+            <!-- Passenger details -->
+            <h5 class="card-title">{{ passenger.psngrName }}</h5>
+            <p class="card-text mb-1">
+              <small class="text-muted">ID:</small> {{ passenger.psngrId }}
+            </p>
+            <p class="card-text mb-1">
+              <small class="text-muted">Contact:</small> {{ passenger.psngrContact }}
+            </p>
+            <p class="card-text mb-1">
+              <small class="text-muted">Seat:</small> {{ passenger.seatno }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex">
+      <button type="button" class="btn btn-secondary" routerLink="/trips">Cancel</button>
+    </div>
+  </div>
+</div>

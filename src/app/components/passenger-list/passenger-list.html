@@ -1,0 +1,61 @@
+<!-- <div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Passengers</h2>
+ 
+    <button (click)="refreshList()" class="btn btn-primary mb-3">
+        Refresh List
+      </button>
+   </div>   
+   <div class="table-responsive" >
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                  <th>Passenger Number</th>
+                    <th>Contact</th>
+                      <th>Image</th>
+                        <th>SeatNo</th>
+   <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+           @for(passenger of passengers;track passenger.psngrId){
+            <tr>
+              <td>{{passenger.psngrId}}</td>
+               <td>{{passenger.psngrName}}</td>
+                <td>{{passenger.psngrContact}}</td>
+                 <td>{{passenger.imageUrl}}</td>
+                  <td>{{passenger.seatno}}</td>
+                 <td>
+                  <div>
+                    <button class="btn btn-info" [routerLink]="['/vehicles/edit',passenger.psngrId]">Edit</button>
+                     <button class="btn btn-danger" (click)="deleteVehicle(passenger.psngrId)">Delete</button>
+                  </div>
+                 </td>
+            </tr>
+           }
+           @empty{
+            <tr>
+              <td colspan="6" class="text-center text-muted">No vehicles found</td>
+            </tr>
+            
+           }
+        </tbody>
+    </table>
+ </div>
+</div> -->
+ 
+
+<input type="number" [(ngModel)]="tripId" placeholder="Enter Trip ID">
+<button (click)="getByTrip()">Get Passengers by Trip</button>
+
+<button (click)="getAll()">Get All Passengers</button>
+
+<hr>
+
+<h3>Passengers:</h3>
+<ul>
+  <li *ngFor="let p of passengers()">
+    {{ p.psngrId }} - {{ p.psngrName }}
+  </li>
+</ul>

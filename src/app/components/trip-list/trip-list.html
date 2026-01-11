@@ -1,0 +1,78 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Trip Management</h2>
+    <button class="btn btn-success" routerLink="/trips/create">
+      <i class="fa fa-plus me-1"></i> Create New Trip
+    </button>
+   
+  </div>
+
+  @if (errorMessage) {
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+  }
+  <!-- 
+  <div *ngIf="isLoading" class="text-center">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div> -->
+
+  <div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th>Trip ID</th>
+          <th>From</th>
+          <th>To</th>
+          <th>Driver</th>
+          <th>Vehicle</th>
+          <th>Start Date</th>
+          <th>Status</th>
+          <th>Passengers</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+       @for (trip of trips(); track $index) {
+        <tr>
+          <td>{{ trip.tripId }}</td>
+          <td>{{ trip.startLocation }}</td>
+          <td>{{ trip.destination }}</td>
+          <td>{{ trip.driver?.driName }}</td>
+          <td>{{ trip.vehicle?.viclNum  }}</td>
+          <td>{{ trip.startDateTime | date : 'short' }}</td>
+          <td>
+            <span
+              [ngClass]="{
+                'badge bg-success': trip.status === 'Completed',
+                'badge bg-warning': trip.status === 'In Progress',
+                'badge bg-secondary': trip.status === 'Scheduled',
+                'badge bg-danger': trip.status === 'Cancelled'
+              }"
+            >
+              {{ trip.status }}
+            </span>
+          </td>
+          <td>{{ trip.passengers?.length || 0 }}</td>
+          <td>
+            <div class="btn-group btn-group-sm">
+              <button class="btn btn-info" [routerLink]="['/trips/edit', trip.tripId]">Edit</button>
+              <button class="btn btn-danger" (click)="deleteTrip(trip.tripId)">Delete</button>
+              <button class="btn btn-secondary" [routerLink]="['/trips/details', trip.tripId]">
+                Details
+              </button>
+            </div>
+          </td>
+        </tr>
+             }
+             @empty{
+        <tr *ngIf="trips.length === 0">
+          <td colspan="9" class="text-center text-muted">No trips found</td>
+        </tr>
+      }
+      </tbody>
+    </table>
+  </div>
+
